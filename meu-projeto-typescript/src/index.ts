@@ -1,40 +1,35 @@
-class ContaBancaria {
-    titular: string;
-    saldo: number;
+class Livro {
+    titulo: string;
+    autor: string;
+    paginas: number;
+    lido: boolean;
 
-    constructor(titular: string, saldoInicial: number) {
-        this.titular = titular;
-        this.saldo = saldoInicial;
+    constructor(titulo: string, autor: string, paginas: number, lido: boolean = false) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.paginas = paginas;
+        this.lido = lido;
     }
 
-    depositar(valor: number): void {
-        if (valor > 0) {
-            this.saldo += valor;
-            console.log(`Depósito de R$${valor.toFixed(2)} realizado com sucesso!`);
+    marcarComoLido(): void {
+        if (!this.lido) {
+            this.lido = true;
+            console.log(`O livro "${this.titulo}" foi marcado como lido.`);
         } else {
-            console.log("O valor do depósito deve ser positivo.");
+            console.log(`O livro "${this.titulo}" já estava marcado como lido.`);
         }
     }
 
-    sacar(valor: number): void {
-        if (valor > 0 && valor <= this.saldo) {
-            this.saldo -= valor;
-            console.log(`Saque de R$${valor.toFixed(2)} realizado com sucesso!`);
-        } else if (valor > this.saldo) {
-            console.log("Saldo insuficiente para o saque.");
-        } else {
-            console.log("O valor do saque deve ser positivo.");
-        }
-    }
-
-    exibirSaldo(): void {
-        console.log(`Saldo atual de ${this.titular}: R$${this.saldo.toFixed(2)}`);
+    exibirInformacoes(): void {
+        console.log(`Título: ${this.titulo}`);
+        console.log(`Autor: ${this.autor}`);
+        console.log(`Páginas: ${this.paginas}`);
+        console.log(`Lido: ${this.lido ? "Sim" : "Não"}`);
     }
 }
 
 
-const minhaConta = new ContaBancaria("João Silva", 1000);
-minhaConta.exibirSaldo(); 
-minhaConta.depositar(500);
-minhaConta.sacar(300); 
-minhaConta.exibirSaldo(); 
+const meuLivro = new Livro("Dom Quixote", "Miguel de Cervantes", 1000);
+meuLivro.exibirInformacoes(); 
+meuLivro.marcarComoLido();    
+meuLivro.exibirInformacoes(); 
