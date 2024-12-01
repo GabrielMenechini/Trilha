@@ -1,26 +1,27 @@
-class Produto {
-    nome: string;
-    preco: number;
-    quantidade: number;
+class Temperatura {
+    valor: number; 
 
-    constructor(nome: string, preco: number, quantidade: number) {
-        this.nome = nome;
-        this.preco = preco;
-        this.quantidade = quantidade;
+    constructor(valor: number) {
+        this.valor = valor;
     }
 
-    calcularValorTotalEstoque(): number {
-        return this.preco * this.quantidade;
+  
+    converterParaFahrenheit(): number {
+        return (this.valor * 9/5) + 32;
     }
 
-    exibirInformacoes(): void {
-        console.log(`Produto: ${this.nome}`);
-        console.log(`Preço: R$${this.preco.toFixed(2)}`);
-        console.log(`Quantidade em estoque: ${this.quantidade}`);
-        console.log(`Valor total em estoque: R$${this.calcularValorTotalEstoque().toFixed(2)}`);
+  
+    converterParaKelvin(): number {
+        return this.valor + 273.15;
+    }
+
+    exibirConversoes(): void {
+        console.log(`Temperatura em Celsius: ${this.valor.toFixed(2)} °C`);
+        console.log(`Temperatura em Fahrenheit: ${this.converterParaFahrenheit().toFixed(2)} °F`);
+        console.log(`Temperatura em Kelvin: ${this.converterParaKelvin().toFixed(2)} K`);
     }
 }
 
 
-const produto = new Produto("Notebook", 3500.00, 10);
-produto.exibirInformacoes(); 
+const temperatura = new Temperatura(25);
+temperatura.exibirConversoes(); 
