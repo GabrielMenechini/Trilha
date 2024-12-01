@@ -1,28 +1,19 @@
 "use strict";
-class Livro {
-    constructor(titulo, autor, paginas, lido = false) {
-        this.titulo = titulo;
-        this.autor = autor;
-        this.paginas = paginas;
-        this.lido = lido;
+class Produto {
+    constructor(nome, preco, quantidade) {
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
     }
-    marcarComoLido() {
-        if (!this.lido) {
-            this.lido = true;
-            console.log(`O livro "${this.titulo}" foi marcado como lido.`);
-        }
-        else {
-            console.log(`O livro "${this.titulo}" já estava marcado como lido.`);
-        }
+    calcularValorTotalEstoque() {
+        return this.preco * this.quantidade;
     }
     exibirInformacoes() {
-        console.log(`Título: ${this.titulo}`);
-        console.log(`Autor: ${this.autor}`);
-        console.log(`Páginas: ${this.paginas}`);
-        console.log(`Lido: ${this.lido ? "Sim" : "Não"}`);
+        console.log(`Produto: ${this.nome}`);
+        console.log(`Preço: R$${this.preco.toFixed(2)}`);
+        console.log(`Quantidade em estoque: ${this.quantidade}`);
+        console.log(`Valor total em estoque: R$${this.calcularValorTotalEstoque().toFixed(2)}`);
     }
 }
-const meuLivro = new Livro("Dom Quixote", "Miguel de Cervantes", 1000);
-meuLivro.exibirInformacoes();
-meuLivro.marcarComoLido();
-meuLivro.exibirInformacoes();
+const produto = new Produto("Notebook", 3500.00, 10);
+produto.exibirInformacoes();
