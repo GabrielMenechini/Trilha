@@ -1,53 +1,47 @@
-class Animal {
-    private energia: number;
+abstract class Funcionario {
+    private nome: string;
+    private salario: number;
 
-    constructor(energiaInicial: number) {
-        this.energia = energiaInicial;
+    constructor(nome: string, salario: number) {
+        this.nome = nome;
+        this.salario = salario;
     }
 
-    comer(): void {
-        console.log("O animal comeu.");
+    getSalario(): number {
+        return this.salario;
     }
 
-    statusEnergia(): void {
-        console.log(`Energia atual: ${this.energia}`);
+    getNome(): string {
+        return this.nome;
     }
 
-    protected alterarEnergia(valor: number): void {
-        this.energia += valor;
+    abstract calcularBonus(): number;
+}
+
+class Gerente extends Funcionario {
+    calcularBonus(): number {
+        return this.getSalario() * 0.1;
     }
 }
 
-class Leao extends Animal {
-    constructor() {
-        super(100);
-    }
-
-    comer(): void {
-        this.alterarEnergia(-30);
-        this.alterarEnergia(50);
-        console.log("O leão caçou e se alimentou.");
+class Operario extends Funcionario {
+    calcularBonus(): number {
+        return this.getSalario() * 0.05;
     }
 }
 
-class Passaro extends Animal {
-    constructor() {
-        super(50);
-    }
-
-    comer(): void {
-        this.alterarEnergia(20);
-        console.log("O pássaro se alimentou.");
-    }
-}
-
-function gerenciarAnimais(animais: Animal[]): void {
-    animais.forEach(animal => {
-        animal.comer();
-        animal.statusEnergia();
+function calcularSalarioComBonus(funcionarios: Funcionario[]): void {
+    funcionarios.forEach(funcionario => {
+        const bonus = funcionario.calcularBonus();
+        const salarioFinal = funcionario.getSalario() + bonus;
+        console.log(
+            `Funcionário: ${funcionario.getNome()}, Salário Base: ${funcionario.getSalario().toFixed(2)}, Bônus: ${bonus.toFixed(2)}, Salário Final: ${salarioFinal.toFixed(2)}`
+        );
     });
 }
 
-const leao = new Leao();
-const passaro = new Passaro();
-gerenciarAnimais([leao, passaro]);
+const gerente = new Gerente("Carlos", 10000);
+const operario1 = new Operario("Ana", 3000);
+const operario2 = new Operario("João", 2500);
+
+calcularSalarioComBonus([gerente, operario1, operario2]);

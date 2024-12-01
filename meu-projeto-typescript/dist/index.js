@@ -1,43 +1,34 @@
 "use strict";
-class Animal {
-    constructor(energiaInicial) {
-        this.energia = energiaInicial;
+class Funcionario {
+    constructor(nome, salario) {
+        this.nome = nome;
+        this.salario = salario;
     }
-    comer() {
-        console.log("O animal comeu.");
+    getSalario() {
+        return this.salario;
     }
-    statusEnergia() {
-        console.log(`Energia atual: ${this.energia}`);
-    }
-    alterarEnergia(valor) {
-        this.energia += valor;
+    getNome() {
+        return this.nome;
     }
 }
-class Leao extends Animal {
-    constructor() {
-        super(100);
-    }
-    comer() {
-        this.alterarEnergia(-30);
-        this.alterarEnergia(50);
-        console.log("O leão caçou e se alimentou.");
+class Gerente extends Funcionario {
+    calcularBonus() {
+        return this.getSalario() * 0.1;
     }
 }
-class Passaro extends Animal {
-    constructor() {
-        super(50);
-    }
-    comer() {
-        this.alterarEnergia(20);
-        console.log("O pássaro se alimentou.");
+class Operario extends Funcionario {
+    calcularBonus() {
+        return this.getSalario() * 0.05;
     }
 }
-function gerenciarAnimais(animais) {
-    animais.forEach(animal => {
-        animal.comer();
-        animal.statusEnergia();
+function calcularSalarioComBonus(funcionarios) {
+    funcionarios.forEach(funcionario => {
+        const bonus = funcionario.calcularBonus();
+        const salarioFinal = funcionario.getSalario() + bonus;
+        console.log(`Funcionário: ${funcionario.getNome()}, Salário Base: ${funcionario.getSalario().toFixed(2)}, Bônus: ${bonus.toFixed(2)}, Salário Final: ${salarioFinal.toFixed(2)}`);
     });
 }
-const leao = new Leao();
-const passaro = new Passaro();
-gerenciarAnimais([leao, passaro]);
+const gerente = new Gerente("Carlos", 10000);
+const operario1 = new Operario("Ana", 3000);
+const operario2 = new Operario("João", 2500);
+calcularSalarioComBonus([gerente, operario1, operario2]);
