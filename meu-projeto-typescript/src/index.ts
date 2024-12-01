@@ -1,33 +1,25 @@
-class Agenda {
-    compromissos: string[];
-
-    constructor() {
-        this.compromissos = [];
+class Veiculo {
+    mover(): void {
+        console.log("O veículo está se movendo");
     }
+}
 
-    adicionarCompromisso(compromisso: string): void {
-        if (compromisso.trim() !== "") {
-            this.compromissos.push(compromisso);
-            console.log(`Compromisso "${compromisso}" adicionado com sucesso!`);
-        } else {
-            console.log("Compromisso não pode ser vazio.");
-        }
+class Carro extends Veiculo {
+    mover(): void {
+        console.log("O carro está dirigindo");
     }
+}
 
-    listarCompromissos(): void {
-        console.log("Lista de compromissos:");
-        if (this.compromissos.length === 0) {
-            console.log("Nenhum compromisso adicionado.");
-        } else {
-            this.compromissos.forEach((compromisso, index) => {
-                console.log(`${index + 1}. ${compromisso}`);
-            });
-        }
+class Bicicleta extends Veiculo {
+    mover(): void {
+        console.log("A bicicleta está pedalando");
     }
 }
 
 
-const minhaAgenda = new Agenda();
-minhaAgenda.adicionarCompromisso("Reunião com equipe às 10h");
-minhaAgenda.adicionarCompromisso("Consulta médica às 14h");
-minhaAgenda.listarCompromissos(); 
+const meuCarro = new Carro();
+const minhaBicicleta = new Bicicleta();
+
+meuCarro.mover(); 
+minhaBicicleta.mover(); 
+
