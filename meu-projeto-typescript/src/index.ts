@@ -1,27 +1,33 @@
-class Temperatura {
-    valor: number; 
+class Agenda {
+    compromissos: string[];
 
-    constructor(valor: number) {
-        this.valor = valor;
+    constructor() {
+        this.compromissos = [];
     }
 
-  
-    converterParaFahrenheit(): number {
-        return (this.valor * 9/5) + 32;
+    adicionarCompromisso(compromisso: string): void {
+        if (compromisso.trim() !== "") {
+            this.compromissos.push(compromisso);
+            console.log(`Compromisso "${compromisso}" adicionado com sucesso!`);
+        } else {
+            console.log("Compromisso não pode ser vazio.");
+        }
     }
 
-  
-    converterParaKelvin(): number {
-        return this.valor + 273.15;
-    }
-
-    exibirConversoes(): void {
-        console.log(`Temperatura em Celsius: ${this.valor.toFixed(2)} °C`);
-        console.log(`Temperatura em Fahrenheit: ${this.converterParaFahrenheit().toFixed(2)} °F`);
-        console.log(`Temperatura em Kelvin: ${this.converterParaKelvin().toFixed(2)} K`);
+    listarCompromissos(): void {
+        console.log("Lista de compromissos:");
+        if (this.compromissos.length === 0) {
+            console.log("Nenhum compromisso adicionado.");
+        } else {
+            this.compromissos.forEach((compromisso, index) => {
+                console.log(`${index + 1}. ${compromisso}`);
+            });
+        }
     }
 }
 
 
-const temperatura = new Temperatura(25);
-temperatura.exibirConversoes(); 
+const minhaAgenda = new Agenda();
+minhaAgenda.adicionarCompromisso("Reunião com equipe às 10h");
+minhaAgenda.adicionarCompromisso("Consulta médica às 14h");
+minhaAgenda.listarCompromissos(); 
