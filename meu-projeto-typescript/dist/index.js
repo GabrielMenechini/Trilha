@@ -1,40 +1,43 @@
 "use strict";
-class Pagamento {
-    processar() {
-        throw new Error("O método 'processar' deve ser implementado.");
+class Animal {
+    constructor(energiaInicial) {
+        this.energia = energiaInicial;
+    }
+    comer() {
+        console.log("O animal comeu.");
+    }
+    statusEnergia() {
+        console.log(`Energia atual: ${this.energia}`);
+    }
+    alterarEnergia(valor) {
+        this.energia += valor;
     }
 }
-class PagamentoCartao extends Pagamento {
-    constructor(numeroCartao) {
-        super();
-        this.numeroCartao = numeroCartao;
+class Leao extends Animal {
+    constructor() {
+        super(100);
     }
-    validarCartao() {
-        return /^\d{16}$/.test(this.numeroCartao);
-    }
-    processar() {
-        if (this.validarCartao()) {
-            console.log("Pagamento com cartão processado com sucesso.");
-        }
-        else {
-            console.log("Número do cartão inválido.");
-        }
+    comer() {
+        this.alterarEnergia(-30);
+        this.alterarEnergia(50);
+        console.log("O leão caçou e se alimentou.");
     }
 }
-class PagamentoBoleto extends Pagamento {
-    processar() {
-        const codigoBoleto = Math.random().toString().slice(2, 14);
-        console.log(`Boleto gerado: ${codigoBoleto}`);
+class Passaro extends Animal {
+    constructor() {
+        super(50);
+    }
+    comer() {
+        this.alterarEnergia(20);
+        console.log("O pássaro se alimentou.");
     }
 }
-function processarPagamentos(pagamentos) {
-    pagamentos.forEach((pagamento, index) => {
-        console.log(`Processando pagamento ${index + 1}:`);
-        pagamento.processar();
+function gerenciarAnimais(animais) {
+    animais.forEach(animal => {
+        animal.comer();
+        animal.statusEnergia();
     });
 }
-const pagamentoCartao = new PagamentoCartao("1234567812345678");
-const pagamentoCartaoInvalido = new PagamentoCartao("1234");
-const pagamentoBoleto = new PagamentoBoleto();
-const pagamentos = [pagamentoCartao, pagamentoCartaoInvalido, pagamentoBoleto];
-processarPagamentos(pagamentos);
+const leao = new Leao();
+const passaro = new Passaro();
+gerenciarAnimais([leao, passaro]);
