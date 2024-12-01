@@ -1,62 +1,53 @@
 
-abstract class FiguraGeometrica {
-    abstract calcularArea(): number; 
+class Pagamento {
+    processar(): void {
+        throw new Error("O método 'processar' deve ser implementado.");
+    }
 }
 
 
-class Circulo extends FiguraGeometrica {
-    raio: number;
+class PagamentoCartao extends Pagamento {
+    numeroCartao: string;
 
-    constructor(raio: number) {
+    constructor(numeroCartao: string) {
         super();
-        this.raio = raio;
+        this.numeroCartao = numeroCartao;
     }
 
-    calcularArea(): number {
-        return Math.PI * Math.pow(this.raio, 2);
-    }
-}
-
-
-class Quadrado extends FiguraGeometrica {
-    lado: number;
-
-    constructor(lado: number) {
-        super();
-        this.lado = lado;
+    validarCartao(): boolean {
+        
+        return /^\d{16}$/.test(this.numeroCartao);
     }
 
-    calcularArea(): number {
-        return Math.pow(this.lado, 2);
-    }
-}
-
-class Triangulo extends FiguraGeometrica {
-    base: number;
-    altura: number;
-
-    constructor(base: number, altura: number) {
-        super();
-        this.base = base;
-        this.altura = altura;
-    }
-
-    calcularArea(): number {
-        return (this.base * this.altura) / 2;
+    processar(): void {
+        if (this.validarCartao()) {
+            console.log("Pagamento com cartão processado com sucesso.");
+        } else {
+            console.log("Número do cartão inválido.");
+        }
     }
 }
 
 
-function exibirAreas(figuras: FiguraGeometrica[]): void {
-    figuras.forEach((figura, index) => {
-        console.log(`Figura ${index + 1}: Área = ${figura.calcularArea().toFixed(2)}`);
+class PagamentoBoleto extends Pagamento {
+    processar(): void {
+        const codigoBoleto = Math.random().toString().slice(2, 14); 
+        console.log(`Boleto gerado: ${codigoBoleto}`);
+    }
+}
+
+
+function processarPagamentos(pagamentos: Pagamento[]): void {
+    pagamentos.forEach((pagamento, index) => {
+        console.log(`Processando pagamento ${index + 1}:`);
+        pagamento.processar();
     });
 }
 
 
-const circulo = new Circulo(5); 
-const quadrado = new Quadrado(4); 
-const triangulo = new Triangulo(6, 3);
+const pagamentoCartao = new PagamentoCartao("1234567812345678"); 
+const pagamentoCartaoInvalido = new PagamentoCartao("1234"); 
+const pagamentoBoleto = new PagamentoBoleto();
 
-const figuras: FiguraGeometrica[] = [circulo, quadrado, triangulo];
-exibirAreas(figuras);
+const pagamentos: Pagamento[] = [pagamentoCartao, pagamentoCartaoInvalido, pagamentoBoleto];
+processarPagamentos(pagamentos);

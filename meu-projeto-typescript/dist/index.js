@@ -1,41 +1,40 @@
 "use strict";
-class FiguraGeometrica {
+class Pagamento {
+    processar() {
+        throw new Error("O método 'processar' deve ser implementado.");
+    }
 }
-class Circulo extends FiguraGeometrica {
-    constructor(raio) {
+class PagamentoCartao extends Pagamento {
+    constructor(numeroCartao) {
         super();
-        this.raio = raio;
+        this.numeroCartao = numeroCartao;
     }
-    calcularArea() {
-        return Math.PI * Math.pow(this.raio, 2);
+    validarCartao() {
+        return /^\d{16}$/.test(this.numeroCartao);
     }
-}
-class Quadrado extends FiguraGeometrica {
-    constructor(lado) {
-        super();
-        this.lado = lado;
-    }
-    calcularArea() {
-        return Math.pow(this.lado, 2);
-    }
-}
-class Triangulo extends FiguraGeometrica {
-    constructor(base, altura) {
-        super();
-        this.base = base;
-        this.altura = altura;
-    }
-    calcularArea() {
-        return (this.base * this.altura) / 2;
+    processar() {
+        if (this.validarCartao()) {
+            console.log("Pagamento com cartão processado com sucesso.");
+        }
+        else {
+            console.log("Número do cartão inválido.");
+        }
     }
 }
-function exibirAreas(figuras) {
-    figuras.forEach((figura, index) => {
-        console.log(`Figura ${index + 1}: Área = ${figura.calcularArea().toFixed(2)}`);
+class PagamentoBoleto extends Pagamento {
+    processar() {
+        const codigoBoleto = Math.random().toString().slice(2, 14);
+        console.log(`Boleto gerado: ${codigoBoleto}`);
+    }
+}
+function processarPagamentos(pagamentos) {
+    pagamentos.forEach((pagamento, index) => {
+        console.log(`Processando pagamento ${index + 1}:`);
+        pagamento.processar();
     });
 }
-const circulo = new Circulo(5);
-const quadrado = new Quadrado(4);
-const triangulo = new Triangulo(6, 3);
-const figuras = [circulo, quadrado, triangulo];
-exibirAreas(figuras);
+const pagamentoCartao = new PagamentoCartao("1234567812345678");
+const pagamentoCartaoInvalido = new PagamentoCartao("1234");
+const pagamentoBoleto = new PagamentoBoleto();
+const pagamentos = [pagamentoCartao, pagamentoCartaoInvalido, pagamentoBoleto];
+processarPagamentos(pagamentos);
